@@ -20,7 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, password } = credentials;
 
         if (email !== testUser.email || password !== testUser.password) {
-          return { error: "Invalid email or password" };
+          return null;
         }
 
         return testUser; // Return the user on success

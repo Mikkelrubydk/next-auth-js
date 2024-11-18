@@ -1,8 +1,12 @@
-import { signIn } from "../auth";
+import { auth, signIn } from "../auth";
 
-export default function SignIn() {
+export default async function SignIn() {
+  const session = await auth();
+  console.log("session", session);
+
   async function handleSignIn(formData) {
     "use server";
+
     signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),

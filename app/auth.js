@@ -2,23 +2,7 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    GitHub({
-      profile(profile) {
-        // Customize the user object returned by GitHub
-        return {
-          id: profile.id,
-          name: profile.name,
-          email: profile.email,
-          image: profile.avatar_url,
-          username: profile.login,
-          bio: profile.bio,
-          location: profile.location,
-          blog: profile.blog
-        };
-      }
-    })
-  ],
+  providers: [GitHub],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -45,6 +29,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.location = token.location;
       session.user.blog = token.blog;
       return session;
+    },
+    async signIn(user, account, profile) {
+      // You can perform additional logic here
+      console.log("---------- signIn ----------");
+
+      console.log(user, account, profile);
+
+      return true;
     }
   }
 });
